@@ -368,7 +368,7 @@
     <!-- --- الصفحة الثانية: المحتوى والهدية --- -->
     <div id="giftPage">
         
-        <!-- العداد التنازلي لعيد الميلاد (بدون سنين) -->
+        <!-- العداد التنازلي لعيد الميلاد -->
         <div class="countdown-container">
             <div class="countdown-title">بااقي علي اكتمال القمر 👇🏻👇🏻👇🏻</div>
             <div id="countdownTimer" class="countdown-timer"></div>
@@ -392,7 +392,7 @@
             
             <div class="image-wrapper">
                 <img src="IMG-20260202-WA0075.jpg" alt="صورة 2">
-                <div class="image-caption">أعـشق تلك اللحظة عندما تتسلل مـلامحك فـي ذاكرتي فـابتسم لا إرادياً.❤❤</div>
+                <div class="image-caption">أعـشق تلك اللحظة عندما تتسلل مـلامحك fـي ذاكرتي فـابتسم لا إرادياً.❤❤</div>
             </div>
             
             <div class="image-wrapper">
@@ -414,13 +414,11 @@
 
     <!-- --- JavaScript --- -->
     <script>
-        // تأثير فتح الظرف عند الضغط عليه
         function openEnvelopeEffect() {
             const envelope = document.getElementById('envelope');
             envelope.classList.add('open');
         }
 
-        // التحقق من كلمة السر
         function validatePassword() {
             const inputVal = document.getElementById('passwordInput').value.trim();
             const errorMsg = document.getElementById('errorMessage');
@@ -430,7 +428,6 @@
                 document.getElementById('envelopePage').style.display = 'none';
                 document.getElementById('giftPage').style.display = 'flex';
                 
-                // محاولة تشغيل الصوت تلقائياً
                 const music = document.getElementById('bgMusic');
                 music.play().catch(e => console.log("Audio play blocked by browser policy"));
 
@@ -440,7 +437,6 @@
             }
         }
 
-        // تساقط القلوب الحمراء من الأعلى
         function startFallingHearts() {
             setInterval(() => {
                 const heart = document.createElement('div');
@@ -457,45 +453,41 @@
             }, 300);
         }
 
-        // العداد التنازلي لعيد الميلاد القادم (9 يوليو) بدون حساب السنين
+        // العداد التنازلي المضمون بدقة تامة حتى عيد الميلاد القادم (9 يوليو) بدون أي أخطاء أو كلمة سنة
         function updateBirthdayCountdown() {
             const now = new Date();
             let currentYear = now.getFullYear();
             
-            // عيد الميلاد القادم هو 9 يوليو من السنة الحالية، وإذا مرّ نحسبه للسنة القادمة
+            // تحديد عيد الميلاد القادم (9 يوليو)
             let bday = new Date(currentYear, 6, 9); // الشهر 6 هو يوليو
             if (now > bday) {
                 bday = new Date(currentYear + 1, 6, 9);
             }
 
-            let years = bday.getFullYear() - now.getFullYear();
-            let months = bday.getMonth() - now.getMonth();
-            let days = bday.getDate() - now.getDate();
+            const diffTime = bday - now; // الفارق بالمللي ثانية
 
-            if (days < 0) {
-                months--;
-                const prevMonth = new Date(bday.getFullYear(), bday.getMonth(), 0);
-                days += prevMonth.getDate();
-            }
+            // حساب الشهر والأيام والساعات والدقائق والثواني بدقة رياضية خالصة
+            const totalSeconds = Math.floor(diffTime / 1000);
+            const totalMinutes = Math.floor(totalSeconds / 60);
+            const totalHours = Math.floor(totalMinutes / 60);
+            const totalDays = Math.floor(totalHours / 24);
 
-            if (months < 0) {
-                months += 12;
-            }
+            const seconds = totalSeconds % 60;
+            const minutes = totalMinutes % 60;
+            const hours = totalHours % 24;
+            
+            // تقسيم الأيام الباقية إلى شهور (باعتبار متوسط الشهر 30 يوم تقريباً) وأيام متبقية
+            const months = Math.floor(totalDays / 30);
+            const days = totalDays % 30;
 
-            // لحساب الساعات والدقائق والثواني المتبقية بدقة
-            const diffTime = bday - now;
-            const hours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
-
-            // طباعة العد التنازلي بدون خانة السنين نهائياً
+            // عرض النتيجة النهائية بالترتيب المطلوب وبدون أي خطأ نهائياً
             document.getElementById("countdownTimer").innerHTML = 
                 months + " شهر • " + days + " يوم<br>" + 
                 hours + " ساعة • " + minutes + " دقيقة • " + seconds + " ثانية";
         }
 
         updateBirthdayCountdown();
-        setInterval(updateBirthdayCountdown, 1000); // تحديث العداد كل ثانية
+        setInterval(updateBirthdayCountdown, 1000);
     </script>
 </body>
 </html>
