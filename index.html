@@ -233,10 +233,10 @@
         }
 
         .countdown-timer {
-            font-size: 17px;
+            font-size: 15px;
             font-weight: 700;
             color: #ff4d4d;
-            direction: ltr; /* لترتيب الأرقام والكلمات بشكل صحيح ومريح */
+            direction: ltr;
         }
 
         /* Audio Player */
@@ -460,28 +460,37 @@
             }, 300);
         }
 
-        // العداد المتحرك بالايام والساعات والدقايق والثواني لتاريخ 9/7/2002
+        // العداد المضبوط بدقة (سنوات، أشهر، أيام، ساعات، دقائق، ثوانٍ) منذ 9/7/2002
         function updateLiveCountdown() {
-            const targetDate = new Date("July 9, 2002 00:00:00").getTime();
-            const now = new Date().getTime();
-            const diff = now - targetDate;
+            const birthDate = new Date(2002, 6, 9); // الشهر 6 يعني يوليو (يبدأ من 0)
+            const now = new Date();
 
-            if (diff < 0) {
-                document.getElementById("countdownTimer").innerHTML = "لم يحن الوقت بعد!";
-                return;
+            let years = now.getFullYear() - birthDate.getFullYear();
+            let months = now.getMonth() - birthDate.getMonth();
+            let days = now.getDate() - birthDate.getDate();
+
+            if (days < 0) {
+                months--;
+                const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                days += prevMonth.getDate();
             }
 
-            const seconds = Math.floor((diff / 1000) % 60);
-            const minutes = Math.floor((diff / (1000 * 60)) % 60);
-            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
 
             document.getElementById("countdownTimer").innerHTML = 
-                days + " يوم • " + hours + " ساعة • " + minutes + " دقيقة • " + seconds + " ثانية";
+                years + " سنة • " + months + " شهر • " + days + " يوم<br>" + 
+                hours + " ساعة • " + minutes + " دقيقة • " + seconds + " ثانية";
         }
 
         updateLiveCountdown();
-        setInterval(updateLiveCountdown, 1000); // يتم تحديث العداد وثوانيه كل ثانية مباشرة
+        setInterval(updateLiveCountdown, 1000); // تحديث العداد كل ثانية بشكل دقيق
     </script>
 </body>
 </html>
