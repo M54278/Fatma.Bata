@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مفاجأة لملوكتي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- General Styles --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* --- Envelope Page Styles --- */
+        #envelopePage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .instruction-text {
+            font-size: 22px;
+            font-weight: 700;
+            color: #ff4d4d;
+            margin-bottom: 30px;
+        }
+
+        .envelope-container {
+            position: relative;
+            width: 200px;
+            height: 140px;
+            background-color: #e6dcc2;
+            border: 2px solid #b5a685;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .envelope-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background-color: #d9cbb1;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            border-bottom: 1px solid #b5a685;
+            z-index: 2;
+        }
+
+        .wax-seal {
+            position: absolute;
+            top: 55px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: #b30000;
+            border-radius: 50%;
+            border: 2px solid #660000;
+            z-index: 3;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .wax-seal::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 25px;
+            height: 25px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .envelope-body {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #e6dcc2;
+            border-radius: 8px;
+            z-index: 1;
+        }
+
+        .password-input {
+            background-color: #2c2c2c;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 300px;
+            font-size: 16px;
+            font-family: 'Cairo', sans-serif;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: #ff4d4d;
+        }
+
+        .error-message {
+            color: #ff4d4d;
+            font-size: 14px;
+            margin-top: -15px;
+            margin-bottom: 15px;
+            display: none; /* Hidden by default */
+        }
+
+        /* --- Gift Page Styles --- */
+        #giftPage {
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            min-height: 100vh;
+        }
+
+        /* Rose Petal Animation */
+        .rose-petal {
+            position: fixed;
+            top: -10px;
+            width: 15px;
+            height: 15px;
+            background-color: #ff4d4d;
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            opacity: 0.8;
+            z-index: -1;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+            }
+        }
+
+        .countdown-container {
+            margin-top: 40px;
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            background-color: rgba(44, 44, 44, 0.8);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #444;
+        }
+
+        .countdown-title {
+            font-size: 18px;
+            color: #ddd;
+            margin-bottom: 10px;
+        }
+
+        .countdown-timer {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ff4d4d;
+        }
+
+        .audio-player {
+            margin-top: 30px;
+            width: 90%;
+            max-width: 400px;
+            background-color: #2c2c2c;
+            border-radius: 50px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .audio-icon {
+            font-size: 20px;
+            color: #ff4d4d;
+        }
+
+        .audio-title {
+            font-size: 14px;
+            color: #ddd;
+        }
+
+        .media-controls {
+             display: flex;
+             gap: 10px;
+             color: #ddd;
+             cursor: pointer;
+        }
+
+        .image-section {
+            margin-top: 40px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .image-wrapper {
+            width: 90%;
+            max-width: 500px;
+            background-color: #2c2c2c;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            border-radius: 10px;
+            display: block;
+        }
+
+        .image-caption {
+            font-size: 16px;
+            color: #fff;
+            margin-top: 15px;
+            line-height: 1.6;
+        }
+
+        .contact-section {
+            margin-top: 80px;
+            margin-bottom: 40px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .whatsapp-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background-color: #25d366;
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: transform 0.2s ease;
+        }
+
+        .whatsapp-link:hover {
+            transform: scale(1.05);
+        }
+
+        .whatsapp-logo {
+            width: 30px;
+            height: 30px;
+        }
+
+        .contact-text {
+            font-size: 18px;
+            color: #ddd;
+            margin-bottom: 10px;
+        }
+
+        .service-text {
+            font-size: 14px;
+            color: #aaa;
+            font-weight: 400;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- --- الصفحة الأولى (الظرف) --- -->
+    <div id="envelopePage">
+        <div class="instruction-text">دوسي يا بطه علي الظرف</div>
+        <div class="envelope-container" onclick="checkPassword()">
+            <div class="envelope-flap"></div>
+            <div class="wax-seal"></div>
+            <div class="envelope-body"></div>
+        </div>
+        <input type="password" id="passwordInput" class="password-input" placeholder="كلمة السر...">
+        <div id="errorMessage" class="error-message">كلمة السر غلط يا بطوط</div>
+    </div>
+
+    <!-- --- الصفحة الثانية (الهدية) --- -->
+    <div id="giftPage">
+        <!-- تأثير تساقط الورد -->
+        <script>
+            function createPetal() {
+                const petal = document.createElement('div');
+                petal.classList.add('rose-petal');
+                petal.style.left = Math.random() * 100 + 'vw';
+                petal.style.animationDuration = Math.random() * 3 + 2 + 's'; // Random speed
+                petal.style.opacity = Math.random() * 0.5 + 0.3;
+                petal.style.width = Math.random() * 10 + 10 + 'px';
+                petal.style.height = petal.style.width;
+                document.body.appendChild(petal);
+
+                setTimeout(() => {
+                    petal.remove();
+                }, 5000);
+            }
+            setInterval(createPetal, 300);
+        </script>
+
+        <!-- العد التنازلي -->
+        <div class="countdown-container">
+            <div class="countdown-title">باقي علي اكتمال القمر 👇🏻👇🏻👇🏻</div>
+            <div id="countdownTimer" class="countdown-timer"></div>
+            <script>
+                // Set the date we're counting down to: July 9, 2002
+                const targetDate = new Date("July 9, 2002 00:00:00").getTime();
+
+                function updateCountdown() {
+                    const now = new Date().getTime();
+                    const diff = now - targetDate; // Time since 2002
+
+                    if (diff < 0) {
+                         document.getElementById("countdownTimer").innerHTML = "لم يحن الوقت بعد!";
+                         return;
+                    }
+
+                    // Calculate time components
+                    const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+                    const remainingAfterYears = diff % (1000 * 60 * 60 * 24 * 365.25);
+                    const months = Math.floor(remainingAfterYears / (1000 * 60 * 60 * 24 * 30.44));
+                    const remainingAfterMonths = remainingAfterYears % (1000 * 60 * 60 * 24 * 30.44);
+                    const days = Math.floor(remainingAfterMonths / (1000 * 60 * 60 * 24));
+
+                    document.getElementById("countdownTimer").innerHTML =
+                        years + " سنة • " + months + " شهور • " + days + " يوم";
+                }
+
+                updateCountdown();
+                setInterval(updateCountdown, 1000 * 60 * 60); // Update every hour
+            </script>
+        </div>
+
+        <!-- مشغل الموسيقى -->
+        <div class="audio-player">
+            <div class="audio-icon">&#9835;</div> <!-- Music Note Icon -->
+            <div class="audio-title">ambtgherm.mp3</div>
+            <div class="media-controls">&#9658; &#10074;&#10074; &#9632;</div> <!-- Play, Pause, Stop Icons (Simplified) -->
+        </div>
+
+        <!-- قسم الصور -->
+        <div class="image-section">
+            <!-- Image 1 -->
+            <div class="image-wrapper">
+                <img src="IMG-20260201-WA0033.jpg" alt="صورة عيون">
+                <div class="image-caption">لا شيء أجمل من سماع صوتك ورؤية ابتسامتك، لا أُريد أكثر من ذلك ❤❤</div>
+            </div>
+            <!-- Image 2
