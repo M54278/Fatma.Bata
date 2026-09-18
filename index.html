@@ -124,14 +124,32 @@
         .error-message {
             color: #ff4d4d;
             font-size: 14px;
-            margin-top: -15px;
+            margin-top: -10px;
             margin-bottom: 15px;
-            display: none; /* Hidden by default */
+            display: none;
+        }
+
+        .submit-btn {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(255, 77, 77, 0.3);
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #e03e3e;
         }
 
         /* --- Gift Page Styles --- */
         #giftPage {
-            display: none; /* Hidden by default */
+            display: none;
             flex-direction: column;
             align-items: center;
             padding: 20px 0;
@@ -175,39 +193,25 @@
         }
 
         .countdown-timer {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             color: #ff4d4d;
         }
 
-        .audio-player {
+        .audio-container {
             margin-top: 30px;
             width: 90%;
             max-width: 400px;
             background-color: #2c2c2c;
-            border-radius: 50px;
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
-        .audio-icon {
-            font-size: 20px;
-            color: #ff4d4d;
-        }
-
-        .audio-title {
-            font-size: 14px;
-            color: #ddd;
-        }
-
-        .media-controls {
-             display: flex;
-             gap: 10px;
-             color: #ddd;
-             cursor: pointer;
+        .audio-container audio {
+            width: 100%;
+            margin-top: 10px;
         }
 
         .image-section {
@@ -239,6 +243,7 @@
             color: #fff;
             margin-top: 15px;
             line-height: 1.6;
+            text-align: center;
         }
 
         .contact-section {
@@ -252,13 +257,13 @@
         .whatsapp-link {
             display: inline-flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             background-color: #25d366;
             color: #fff;
-            padding: 15px 25px;
+            padding: 12px 25px;
             border-radius: 50px;
             text-decoration: none;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
             margin-bottom: 20px;
             transition: transform 0.2s ease;
@@ -269,22 +274,22 @@
         }
 
         .whatsapp-logo {
-            width: 30px;
-            height: 30px;
+            width: 24px;
+            height: 24px;
+            fill: #fff;
         }
 
         .contact-text {
             font-size: 18px;
             color: #ddd;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .service-text {
-            font-size: 14px;
+            font-size: 15px;
             color: #aaa;
             font-weight: 400;
         }
-
     </style>
 </head>
 <body>
@@ -292,24 +297,87 @@
     <!-- --- الصفحة الأولى (الظرف) --- -->
     <div id="envelopePage">
         <div class="instruction-text">دوسي يا بطه علي الظرف</div>
-        <div class="envelope-container" onclick="checkPassword()">
+        <div class="envelope-container" onclick="validatePassword()">
             <div class="envelope-flap"></div>
             <div class="wax-seal"></div>
             <div class="envelope-body"></div>
         </div>
-        <input type="password" id="passwordInput" class="password-input" placeholder="كلمة السر...">
+        <input type="password" id="passwordInput" class="password-input" placeholder="اكتبي كلمة السر...">
+        <button class="submit-btn" onclick="validatePassword()">فتح الهدية ✨</button>
         <div id="errorMessage" class="error-message">كلمة السر غلط يا بطوط</div>
     </div>
 
     <!-- --- الصفحة الثانية (الهدية) --- -->
     <div id="giftPage">
-        <!-- تأثير تساقط الورد -->
-        <script>
+        <!-- العد التنازلي -->
+        <div class="countdown-container">
+            <div class="countdown-title">باقي علي اكتمال القمر 👇🏻👇🏻👇🏻</div>
+            <div id="countdownTimer" class="countdown-timer"></div>
+        </div>
+
+        <!-- مشغل الموسيقى -->
+        <div class="audio-container">
+            <div style="font-size: 14px; color: #ddd; margin-bottom: 5px;">🎵 ambtgherm.mp3</div>
+            <audio controls>
+                <source src="ambtgherm.mp3" type="audio/mpeg">
+                متصفحك لا يدعم تشغيل الصوت
+            </audio>
+        </div>
+
+        <!-- قسم الصور -->
+        <div class="image-section">
+            <!-- Image 1 -->
+            <div class="image-wrapper">
+                <img src="IMG-20260201-WA0033.jpg" alt="صورة 1">
+                <div class="image-caption">لا شيء أجمل من سماع صوتك ورؤية ابتسامتك، لا أُريد أكثر من ذلك ❤❤</div>
+            </div>
+            <!-- Image 2 -->
+            <div class="image-wrapper">
+                <img src="IMG-20260202-WA0075.jpg" alt="صورة 2">
+                <div class="image-caption">أعـشق تلك اللحظة عندما تتسلل مـلامحك فـي ذاكرتي فـابتسم لا إرادياً.❤❤</div>
+            </div>
+            <!-- Image 3 -->
+            <div class="image-wrapper">
+                <img src="IMG-20260202-WA754.jpg" alt="صورة 3">
+                <div class="image-caption">عيونك هي الوطن الذي أفر إليه حين تضيق بي الدنيا.❤❤</div>
+            </div>
+        </div>
+
+        <!-- قسم التواصل واتساب -->
+        <div class="contact-section">
+            <a href="https://wa.me/201155852870" class="whatsapp-link" target="_blank">
+                <svg class="whatsapp-logo" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                تواصل عبر واتساب
+            </a>
+            <div class="contact-text">اللي عاوز زي كدا يكلمني</div>
+            <div class="service-text">تصميم هدايا للمرتبطين واعياد ميلاد</div>
+        </div>
+    </div>
+
+    <!-- --- JavaScript --- -->
+    <script>
+        // التحقق من كلمة السر
+        function validatePassword() {
+            const inputVal = document.getElementById('passwordInput').value.trim();
+            const errorMsg = document.getElementById('errorMessage');
+            const correctPassword = "Bata";
+
+            if (inputVal === correctPassword) {
+                document.getElementById('envelopePage').style.display = 'none';
+                document.getElementById('giftPage').style.display = 'flex';
+                startPetals();
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        // تساقط أوراق الورد
+        function startPetals() {
             function createPetal() {
                 const petal = document.createElement('div');
                 petal.classList.add('rose-petal');
                 petal.style.left = Math.random() * 100 + 'vw';
-                petal.style.animationDuration = Math.random() * 3 + 2 + 's'; // Random speed
+                petal.style.animationDuration = Math.random() * 3 + 2 + 's';
                 petal.style.opacity = Math.random() * 0.5 + 0.3;
                 petal.style.width = Math.random() * 10 + 10 + 'px';
                 petal.style.height = petal.style.width;
@@ -320,53 +388,31 @@
                 }, 5000);
             }
             setInterval(createPetal, 300);
-        </script>
+        }
 
-        <!-- العد التنازلي -->
-        <div class="countdown-container">
-            <div class="countdown-title">باقي علي اكتمال القمر 👇🏻👇🏻👇🏻</div>
-            <div id="countdownTimer" class="countdown-timer"></div>
-            <script>
-                // Set the date we're counting down to: July 9, 2002
-                const targetDate = new Date("July 9, 2002 00:00:00").getTime();
+        // العداد التنازلي لتاريخ 9/7/2002
+        function updateCountdown() {
+            const targetDate = new Date("July 9, 2002 00:00:00").getTime();
+            const now = new Date().getTime();
+            const diff = now - targetDate;
 
-                function updateCountdown() {
-                    const now = new Date().getTime();
-                    const diff = now - targetDate; // Time since 2002
+            if (diff < 0) {
+                document.getElementById("countdownTimer").innerHTML = "لم يحن الوقت بعد!";
+                return;
+            }
 
-                    if (diff < 0) {
-                         document.getElementById("countdownTimer").innerHTML = "لم يحن الوقت بعد!";
-                         return;
-                    }
+            const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+            const remainingAfterYears = diff % (1000 * 60 * 60 * 24 * 365.25);
+            const months = Math.floor(remainingAfterYears / (1000 * 60 * 60 * 24 * 30.44));
+            const remainingAfterMonths = remainingAfterYears % (1000 * 60 * 60 * 24 * 30.44);
+            const days = Math.floor(remainingAfterMonths / (1000 * 60 * 60 * 24));
 
-                    // Calculate time components
-                    const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
-                    const remainingAfterYears = diff % (1000 * 60 * 60 * 24 * 365.25);
-                    const months = Math.floor(remainingAfterYears / (1000 * 60 * 60 * 24 * 30.44));
-                    const remainingAfterMonths = remainingAfterYears % (1000 * 60 * 60 * 24 * 30.44);
-                    const days = Math.floor(remainingAfterMonths / (1000 * 60 * 60 * 24));
+            document.getElementById("countdownTimer").innerHTML =
+                years + " سنة • " + months + " شهور • " + days + " يوم";
+        }
 
-                    document.getElementById("countdownTimer").innerHTML =
-                        years + " سنة • " + months + " شهور • " + days + " يوم";
-                }
-
-                updateCountdown();
-                setInterval(updateCountdown, 1000 * 60 * 60); // Update every hour
-            </script>
-        </div>
-
-        <!-- مشغل الموسيقى -->
-        <div class="audio-player">
-            <div class="audio-icon">&#9835;</div> <!-- Music Note Icon -->
-            <div class="audio-title">ambtgherm.mp3</div>
-            <div class="media-controls">&#9658; &#10074;&#10074; &#9632;</div> <!-- Play, Pause, Stop Icons (Simplified) -->
-        </div>
-
-        <!-- قسم الصور -->
-        <div class="image-section">
-            <!-- Image 1 -->
-            <div class="image-wrapper">
-                <img src="IMG-20260201-WA0033.jpg" alt="صورة عيون">
-                <div class="image-caption">لا شيء أجمل من سماع صوتك ورؤية ابتسامتك، لا أُريد أكثر من ذلك ❤❤</div>
-            </div>
-            <!-- Image 2
+        updateCountdown();
+        setInterval(updateCountdown, 1000 * 60 * 60);
+    </script>
+</body>
+</html>
