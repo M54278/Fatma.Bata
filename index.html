@@ -11,7 +11,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Cairo', sans-serif;
-            background-color: #1a1a1a;
+            background-color: #121212;
             color: #fff;
             overflow-x: hidden;
         }
@@ -31,102 +31,132 @@
             font-size: 22px;
             font-weight: 700;
             color: #ff4d4d;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
+        /* Real Natural Envelope Design */
         .envelope-container {
             position: relative;
-            width: 200px;
-            height: 140px;
-            background-color: #e6dcc2;
-            border: 2px solid #b5a685;
-            border-radius: 8px;
+            width: 260px;
+            height: 170px;
+            background-color: #d1b894;
+            border-radius: 0 0 10px 10px;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            margin-bottom: 35px;
+            transition: transform 0.3s ease;
         }
 
         .envelope-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            transform: scale(1.03);
         }
 
+        /* Envelope Flap (Triangle top) */
         .envelope-flap {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 70px;
-            background-color: #d9cbb1;
+            height: 90px;
+            background-color: #bfa074;
             clip-path: polygon(0 0, 100% 0, 50% 100%);
-            border-bottom: 1px solid #b5a685;
-            z-index: 2;
+            transform-origin: top;
+            transition: transform 0.6s ease;
+            z-index: 4;
         }
 
-        .wax-seal {
+        .envelope-container.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        /* Pockets of the envelope for realistic look */
+        .envelope-pocket-left {
             position: absolute;
-            top: 55px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 40px;
-            background-color: #b30000;
-            border-radius: 50%;
-            border: 2px solid #660000;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-bottom: 110px solid #c4a47c;
+            border-right: 130px solid transparent;
             z-index: 3;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            border-radius: 0 0 0 10px;
         }
 
-        .wax-seal::after {
-            content: '';
+        .envelope-pocket-right {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 25px;
-            height: 25px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>');
-            background-size: contain;
-            background-repeat: no-repeat;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-bottom: 110px solid #c4a47c;
+            border-left: 130px solid transparent;
+            z-index: 3;
+            border-radius: 0 0 10px 0;
         }
 
-        .envelope-body {
+        .envelope-pocket-bottom {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background-color: #e6dcc2;
-            border-radius: 8px;
-            z-index: 1;
+            height: 105px;
+            background-color: #d1b894;
+            border-radius: 0 0 10px 10px;
+            z-index: 2;
         }
 
+        /* Wax Seal */
+        .wax-seal {
+            position: absolute;
+            top: 65px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 45px;
+            height: 45px;
+            background-color: #a30000;
+            border-radius: 50%;
+            border: 2px solid #520000;
+            z-index: 5;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wax-seal span {
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Password and Controls */
         .password-input {
-            background-color: #2c2c2c;
+            background-color: #1e1e1e;
             border: 1px solid #444;
             color: #fff;
-            padding: 15px;
-            border-radius: 8px;
+            padding: 14px 20px;
+            border-radius: 30px;
             width: 80%;
-            max-width: 300px;
+            max-width: 280px;
             font-size: 16px;
             font-family: 'Cairo', sans-serif;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: center;
+            outline: none;
+            transition: border-color 0.3s;
         }
 
         .password-input:focus {
-            outline: none;
             border-color: #ff4d4d;
         }
 
         .error-message {
             color: #ff4d4d;
             font-size: 14px;
-            margin-top: -10px;
             margin-bottom: 15px;
             display: none;
+            font-weight: 600;
         }
 
         .submit-btn {
@@ -140,96 +170,113 @@
             cursor: pointer;
             font-weight: 600;
             box-shadow: 0 4px 10px rgba(255, 77, 77, 0.3);
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.2s;
         }
 
         .submit-btn:hover {
             background-color: #e03e3e;
+            transform: scale(1.05);
         }
 
-        /* --- Gift Page Styles --- */
+        /* --- Gift Page Styles (Dark Mode) --- */
         #giftPage {
             display: none;
             flex-direction: column;
             align-items: center;
-            padding: 20px 0;
+            padding: 30px 10px;
             min-height: 100vh;
+            background-color: #121212;
+            position: relative;
         }
 
-        /* Rose Petal Animation */
-        .rose-petal {
+        /* Falling Hearts Animation */
+        .falling-heart {
             position: fixed;
-            top: -10px;
-            width: 15px;
-            height: 15px;
-            background-color: #ff4d4d;
-            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
-            opacity: 0.8;
-            z-index: -1;
+            top: -20px;
+            color: #ff4d4d;
+            font-size: 20px;
+            user-select: none;
+            z-index: 1;
             animation: fall linear infinite;
         }
 
         @keyframes fall {
-            to {
+            0% {
+                transform: translateY(-20px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
                 transform: translateY(105vh) rotate(360deg);
+                opacity: 0.2;
             }
         }
 
+        /* Countdown Container */
         .countdown-container {
-            margin-top: 40px;
+            margin-top: 10px;
+            margin-bottom: 25px;
             text-align: center;
             width: 90%;
-            max-width: 500px;
-            background-color: rgba(44, 44, 44, 0.8);
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #444;
+            max-width: 450px;
+            background-color: #1e1e1e;
+            padding: 18px;
+            border-radius: 14px;
+            border: 1px solid #333;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 2;
         }
 
         .countdown-title {
-            font-size: 18px;
+            font-size: 17px;
             color: #ddd;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-weight: 600;
         }
 
         .countdown-timer {
-            font-size: 20px;
+            font-size: 19px;
             font-weight: 700;
             color: #ff4d4d;
         }
 
+        /* Audio Player */
         .audio-container {
-            margin-top: 30px;
+            margin-bottom: 30px;
             width: 90%;
             max-width: 400px;
-            background-color: #2c2c2c;
-            border-radius: 15px;
-            padding: 15px;
+            background-color: #1e1e1e;
+            border-radius: 12px;
+            padding: 12px;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border: 1px solid #333;
+            z-index: 2;
         }
 
         .audio-container audio {
             width: 100%;
-            margin-top: 10px;
+            margin-top: 8px;
+            outline: none;
         }
 
+        /* Image Section */
         .image-section {
-            margin-top: 40px;
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 40px;
+            gap: 35px;
+            z-index: 2;
         }
 
         .image-wrapper {
             width: 90%;
-            max-width: 500px;
-            background-color: #2c2c2c;
+            max-width: 450px;
+            background-color: #1e1e1e;
             border-radius: 15px;
             padding: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+            border: 1px solid #333;
         }
 
         .image-wrapper img {
@@ -239,33 +286,38 @@
         }
 
         .image-caption {
-            font-size: 16px;
-            color: #fff;
+            font-size: 15px;
+            color: #e0e0e0;
             margin-top: 15px;
             line-height: 1.6;
             text-align: center;
+            font-weight: 500;
         }
 
+        /* Contact Section */
         .contact-section {
-            margin-top: 80px;
-            margin-bottom: 40px;
+            margin-top: 60px;
+            margin-bottom: 30px;
             text-align: center;
             width: 90%;
             max-width: 400px;
+            z-index: 2;
         }
 
         .whatsapp-link {
             display: inline-flex;
             align-items: center;
-            gap: 12px;
+            justify-content: center;
+            gap: 10px;
             background-color: #25d366;
             color: #fff;
-            padding: 12px 25px;
+            padding: 12px 24px;
             border-radius: 50px;
             text-decoration: none;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
             transition: transform 0.2s ease;
         }
 
@@ -274,69 +326,78 @@
         }
 
         .whatsapp-logo {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             fill: #fff;
         }
 
         .contact-text {
-            font-size: 18px;
-            color: #ddd;
-            margin-bottom: 8px;
+            font-size: 16px;
+            color: #ccc;
+            margin-bottom: 6px;
+            font-weight: 500;
         }
 
         .service-text {
-            font-size: 15px;
-            color: #aaa;
+            font-size: 14px;
+            color: #999;
             font-weight: 400;
+            line-height: 1.5;
         }
     </style>
 </head>
 <body>
 
-    <!-- --- الصفحة الأولى (الظرف) --- -->
+    <!-- --- الصفحة الأولى: الظرف الطبيعي --- -->
     <div id="envelopePage">
         <div class="instruction-text">دوسي يا بطه علي الظرف</div>
-        <div class="envelope-container" onclick="validatePassword()">
+        
+        <div class="envelope-container" id="envelope" onclick="openEnvelopeEffect()">
             <div class="envelope-flap"></div>
-            <div class="wax-seal"></div>
-            <div class="envelope-body"></div>
+            <div class="envelope-pocket-left"></div>
+            <div class="envelope-pocket-right"></div>
+            <div class="envelope-pocket-bottom"></div>
+            <div class="wax-seal"><span>❤</span></div>
         </div>
+
         <input type="password" id="passwordInput" class="password-input" placeholder="اكتبي كلمة السر...">
-        <button class="submit-btn" onclick="validatePassword()">فتح الهدية ✨</button>
         <div id="errorMessage" class="error-message">كلمة السر غلط يا بطوط</div>
+        <button class="submit-btn" onclick="validatePassword()">فتح الهدية ✨</button>
     </div>
 
-    <!-- --- الصفحة الثانية (الهدية) --- -->
+    <!-- --- الصفحة الثانية: المحتوى والهدية --- -->
     <div id="giftPage">
-        <!-- العد التنازلي -->
+        
+        <!-- العداد التنازلي -->
         <div class="countdown-container">
-            <div class="countdown-title">باقي علي اكتمال القمر 👇🏻👇🏻👇🏻</div>
+            <div class="countdown-title">بااقي علي اكتمال القمر 👇🏻👇🏻👇🏻</div>
             <div id="countdownTimer" class="countdown-timer"></div>
         </div>
 
-        <!-- مشغل الموسيقى -->
+        <!-- مشغل الموسيقى (الأغنية الأولى) -->
         <div class="audio-container">
-            <div style="font-size: 14px; color: #ddd; margin-bottom: 5px;">🎵 ambtgherm.mp3</div>
-            <audio controls>
+            <div style="font-size: 13px; color: #aaa; margin-bottom: 4px;">🎵 تشغيل الموسيقى المفضلة</div>
+            <audio controls id="bgMusic">
                 <source src="ambtgherm.mp3" type="audio/mpeg">
                 متصفحك لا يدعم تشغيل الصوت
             </audio>
         </div>
 
-        <!-- قسم الصور -->
+        <!-- قسم الصور والتعليقات -->
         <div class="image-section">
-            <!-- Image 1 -->
+            <!-- الصورة الأولى -->
             <div class="image-wrapper">
                 <img src="IMG-20260201-WA0033.jpg" alt="صورة 1">
                 <div class="image-caption">لا شيء أجمل من سماع صوتك ورؤية ابتسامتك، لا أُريد أكثر من ذلك ❤❤</div>
             </div>
-            <!-- Image 2 -->
+            
+            <!-- الصورة الثانية -->
             <div class="image-wrapper">
                 <img src="IMG-20260202-WA0075.jpg" alt="صورة 2">
                 <div class="image-caption">أعـشق تلك اللحظة عندما تتسلل مـلامحك فـي ذاكرتي فـابتسم لا إرادياً.❤❤</div>
             </div>
-            <!-- Image 3 -->
+            
+            <!-- الصورة الثالثة -->
             <div class="image-wrapper">
                 <img src="IMG-20260202-WA754.jpg" alt="صورة 3">
                 <div class="image-caption">عيونك هي الوطن الذي أفر إليه حين تضيق بي الدنيا.❤❤</div>
@@ -350,44 +411,53 @@
                 تواصل عبر واتساب
             </a>
             <div class="contact-text">اللي عاوز زي كدا يكلمني</div>
-            <div class="service-text">تصميم هدايا للمرتبطين واعياد ميلاد</div>
+            <div class="service-text">تصميم هدايا للمرتبطين واعياد ميلاد بطريقه حلوة اتواصلو معايا</div>
         </div>
     </div>
 
     <!-- --- JavaScript --- -->
     <script>
+        // تأثير فتح الظرف عند الضغط عليه
+        function openEnvelopeEffect() {
+            const envelope = document.getElementById('envelope');
+            envelope.classList.add('open');
+        }
+
         // التحقق من كلمة السر
         function validatePassword() {
             const inputVal = document.getElementById('passwordInput').value.trim();
             const errorMsg = document.getElementById('errorMessage');
-            const correctPassword = "Bata";
+            const correctPassword = "Bata"; // كلمة السر المطلوبة
 
             if (inputVal === correctPassword) {
                 document.getElementById('envelopePage').style.display = 'none';
                 document.getElementById('giftPage').style.display = 'flex';
-                startPetals();
+                
+                // محاولة تشغيل الصوت تلقائياً بعد الانتقال
+                const music = document.getElementById('bgMusic');
+                music.play().catch(e => console.log("Audio play blocked by browser policy"));
+
+                startFallingHearts();
             } else {
                 errorMsg.style.display = 'block';
             }
         }
 
-        // تساقط أوراق الورد
-        function startPetals() {
-            function createPetal() {
-                const petal = document.createElement('div');
-                petal.classList.add('rose-petal');
-                petal.style.left = Math.random() * 100 + 'vw';
-                petal.style.animationDuration = Math.random() * 3 + 2 + 's';
-                petal.style.opacity = Math.random() * 0.5 + 0.3;
-                petal.style.width = Math.random() * 10 + 10 + 'px';
-                petal.style.height = petal.style.width;
-                document.body.appendChild(petal);
+        // تساقط القلوب الحمراء من الأعلى
+        function startFallingHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('falling-heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                heart.style.fontSize = (Math.random() * 12 + 14) + 'px';
+                document.body.appendChild(heart);
 
                 setTimeout(() => {
-                    petal.remove();
-                }, 5000);
-            }
-            setInterval(createPetal, 300);
+                    heart.remove();
+                }, 6000);
+            }, 300);
         }
 
         // العداد التنازلي لتاريخ 9/7/2002
