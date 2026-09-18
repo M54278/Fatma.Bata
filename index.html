@@ -368,13 +368,13 @@
     <!-- --- الصفحة الثانية: المحتوى والهدية --- -->
     <div id="giftPage">
         
-        <!-- العداد التنازلي المتحرك -->
+        <!-- العداد التنازلي لعيد الميلاد (بدون سنين) -->
         <div class="countdown-container">
             <div class="countdown-title">بااقي علي اكتمال القمر 👇🏻👇🏻👇🏻</div>
             <div id="countdownTimer" class="countdown-timer"></div>
         </div>
 
-        <!-- مشغل الموسيقى (الأغنية الجديدة) -->
+        <!-- مشغل الموسيقى -->
         <div class="audio-container">
             <div style="font-size: 13px; color: #aaa; margin-bottom: 4px;">🎵 تشغيل الموسيقى المفضلة</div>
             <audio controls id="bgMusic">
@@ -385,19 +385,16 @@
 
         <!-- قسم الصور والتعليقات -->
         <div class="image-section">
-            <!-- الصورة الأولى -->
             <div class="image-wrapper">
                 <img src="IMG-20260201-WA0033.jpg" alt="صورة 1">
                 <div class="image-caption">لا شيء أجمل من سماع صوتك ورؤية ابتسامتك، لا أُريد أكثر من ذلك ❤❤</div>
             </div>
             
-            <!-- الصورة الثانية -->
             <div class="image-wrapper">
                 <img src="IMG-20260202-WA0075.jpg" alt="صورة 2">
                 <div class="image-caption">أعـشق تلك اللحظة عندما تتسلل مـلامحك فـي ذاكرتي فـابتسم لا إرادياً.❤❤</div>
             </div>
             
-            <!-- الصورة الثالثة -->
             <div class="image-wrapper">
                 <img src="IMG-20260202-WA754.jpg" alt="صورة 3">
                 <div class="image-caption">عيونك هي الوطن الذي أفر إليه حين تضيق بي الدنيا.❤❤</div>
@@ -460,37 +457,45 @@
             }, 300);
         }
 
-        // العداد المضبوط بدقة (سنوات، أشهر، أيام، ساعات، دقائق، ثوانٍ) منذ 9/7/2002
-        function updateLiveCountdown() {
-            const birthDate = new Date(2002, 6, 9); // الشهر 6 يعني يوليو (يبدأ من 0)
+        // العداد التنازلي لعيد الميلاد القادم (9 يوليو) بدون حساب السنين
+        function updateBirthdayCountdown() {
             const now = new Date();
+            let currentYear = now.getFullYear();
+            
+            // عيد الميلاد القادم هو 9 يوليو من السنة الحالية، وإذا مرّ نحسبه للسنة القادمة
+            let bday = new Date(currentYear, 6, 9); // الشهر 6 هو يوليو
+            if (now > bday) {
+                bday = new Date(currentYear + 1, 6, 9);
+            }
 
-            let years = now.getFullYear() - birthDate.getFullYear();
-            let months = now.getMonth() - birthDate.getMonth();
-            let days = now.getDate() - birthDate.getDate();
+            let years = bday.getFullYear() - now.getFullYear();
+            let months = bday.getMonth() - now.getMonth();
+            let days = bday.getDate() - now.getDate();
 
             if (days < 0) {
                 months--;
-                const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                const prevMonth = new Date(bday.getFullYear(), bday.getMonth(), 0);
                 days += prevMonth.getDate();
             }
 
             if (months < 0) {
-                years--;
                 months += 12;
             }
 
-            const hours = now.getHours();
-            const minutes = now.getMinutes();
-            const seconds = now.getSeconds();
+            // لحساب الساعات والدقائق والثواني المتبقية بدقة
+            const diffTime = bday - now;
+            const hours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
 
+            // طباعة العد التنازلي بدون خانة السنين نهائياً
             document.getElementById("countdownTimer").innerHTML = 
-                years + " سنة • " + months + " شهر • " + days + " يوم<br>" + 
+                months + " شهر • " + days + " يوم<br>" + 
                 hours + " ساعة • " + minutes + " دقيقة • " + seconds + " ثانية";
         }
 
-        updateLiveCountdown();
-        setInterval(updateLiveCountdown, 1000); // تحديث العداد كل ثانية بشكل دقيق
+        updateBirthdayCountdown();
+        setInterval(updateBirthdayCountdown, 1000); // تحديث العداد كل ثانية
     </script>
 </body>
 </html>
