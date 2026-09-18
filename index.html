@@ -51,7 +51,7 @@
             transform: scale(1.03);
         }
 
-        /* Envelope Flap (Triangle top) */
+        /* Envelope Flap */
         .envelope-flap {
             position: absolute;
             top: 0;
@@ -70,7 +70,6 @@
             z-index: 1;
         }
 
-        /* Pockets of the envelope for realistic look */
         .envelope-pocket-left {
             position: absolute;
             bottom: 0;
@@ -234,9 +233,10 @@
         }
 
         .countdown-timer {
-            font-size: 19px;
+            font-size: 17px;
             font-weight: 700;
             color: #ff4d4d;
+            direction: ltr; /* لترتيب الأرقام والكلمات بشكل صحيح ومريح */
         }
 
         /* Audio Player */
@@ -368,17 +368,17 @@
     <!-- --- الصفحة الثانية: المحتوى والهدية --- -->
     <div id="giftPage">
         
-        <!-- العداد التنازلي -->
+        <!-- العداد التنازلي المتحرك -->
         <div class="countdown-container">
             <div class="countdown-title">بااقي علي اكتمال القمر 👇🏻👇🏻👇🏻</div>
             <div id="countdownTimer" class="countdown-timer"></div>
         </div>
 
-        <!-- مشغل الموسيقى (الأغنية الأولى) -->
+        <!-- مشغل الموسيقى (الأغنية الجديدة) -->
         <div class="audio-container">
             <div style="font-size: 13px; color: #aaa; margin-bottom: 4px;">🎵 تشغيل الموسيقى المفضلة</div>
             <audio controls id="bgMusic">
-                <source src="ambtgherm.mp3" type="audio/mpeg">
+                <source src="Aumbtgherm.m4a" type="audio/mp4">
                 متصفحك لا يدعم تشغيل الصوت
             </audio>
         </div>
@@ -427,13 +427,13 @@
         function validatePassword() {
             const inputVal = document.getElementById('passwordInput').value.trim();
             const errorMsg = document.getElementById('errorMessage');
-            const correctPassword = "Bata"; // كلمة السر المطلوبة
+            const correctPassword = "Bata";
 
             if (inputVal === correctPassword) {
                 document.getElementById('envelopePage').style.display = 'none';
                 document.getElementById('giftPage').style.display = 'flex';
                 
-                // محاولة تشغيل الصوت تلقائياً بعد الانتقال
+                // محاولة تشغيل الصوت تلقائياً
                 const music = document.getElementById('bgMusic');
                 music.play().catch(e => console.log("Audio play blocked by browser policy"));
 
@@ -460,8 +460,8 @@
             }, 300);
         }
 
-        // العداد التنازلي لتاريخ 9/7/2002
-        function updateCountdown() {
+        // العداد المتحرك بالايام والساعات والدقايق والثواني لتاريخ 9/7/2002
+        function updateLiveCountdown() {
             const targetDate = new Date("July 9, 2002 00:00:00").getTime();
             const now = new Date().getTime();
             const diff = now - targetDate;
@@ -471,18 +471,17 @@
                 return;
             }
 
-            const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
-            const remainingAfterYears = diff % (1000 * 60 * 60 * 24 * 365.25);
-            const months = Math.floor(remainingAfterYears / (1000 * 60 * 60 * 24 * 30.44));
-            const remainingAfterMonths = remainingAfterYears % (1000 * 60 * 60 * 24 * 30.44);
-            const days = Math.floor(remainingAfterMonths / (1000 * 60 * 60 * 24));
+            const seconds = Math.floor((diff / 1000) % 60);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
 
-            document.getElementById("countdownTimer").innerHTML =
-                years + " سنة • " + months + " شهور • " + days + " يوم";
+            document.getElementById("countdownTimer").innerHTML = 
+                days + " يوم • " + hours + " ساعة • " + minutes + " دقيقة • " + seconds + " ثانية";
         }
 
-        updateCountdown();
-        setInterval(updateCountdown, 1000 * 60 * 60);
+        updateLiveCountdown();
+        setInterval(updateLiveCountdown, 1000); // يتم تحديث العداد وثوانيه كل ثانية مباشرة
     </script>
 </body>
 </html>
