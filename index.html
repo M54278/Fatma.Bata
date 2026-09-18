@@ -368,7 +368,7 @@
     <!-- --- الصفحة الثانية: المحتوى والهدية --- -->
     <div id="giftPage">
         
-        <!-- العداد التنازلي لعيد الميلاد (شهور وأيام فقط) -->
+        <!-- العداد التنازلي لعيد الميلاد (الأيام فقط) -->
         <div class="countdown-container">
             <div class="countdown-title">بااقي علي اكتمال القمر 👇🏻👇🏻👇🏻</div>
             <div id="countdownTimer" class="countdown-timer"></div>
@@ -453,7 +453,7 @@
             }, 300);
         }
 
-        // العداد التنازلي (شهور وأيام فقط بدون أي تعقيد)
+        // العداد التنازلي (الأيام فقط بشكل دقيق وتلقائي)
         function updateBirthdayCountdown() {
             const now = new Date();
             let currentYear = now.getFullYear();
@@ -464,13 +464,9 @@
             }
 
             const diffTime = bday - now;
-            const totalDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-            
-            const months = Math.floor(totalDays / 30);
-            const days = totalDays % 30;
+            const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-            document.getElementById("countdownTimer").innerHTML = 
-                months + " شهر • " + days + " يوم";
+            document.getElementById("countdownTimer").innerHTML = totalDays + " يوم";
         }
 
         updateBirthdayCountdown();
